@@ -35,3 +35,5 @@ build/
 .application.yml
 comandos-docker.txt
 comandos-sql.txt
+
+src/main/resources/application.yml
