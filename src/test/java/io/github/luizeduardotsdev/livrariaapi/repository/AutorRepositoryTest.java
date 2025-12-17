@@ -2,14 +2,16 @@ package io.github.luizeduardotsdev.livrariaapi.repository;
 
 import io.github.luizeduardotsdev.livrariaapi.model.Autor;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
 import java.time.LocalDate;
 
-@SpringBootTest
+@DataJpaTest
 public class AutorRepositoryTest {
 
-    AutorRepository autorRepository;
+    @Autowired
+    private AutorRepository autorRepository;
 
     @Test
     public void salvarTest () {
