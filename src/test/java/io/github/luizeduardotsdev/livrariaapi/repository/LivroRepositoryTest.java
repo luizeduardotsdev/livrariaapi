@@ -74,4 +74,10 @@ class LivroRepositoryTest {
         livroRepository.save(livroParaAtualizar);
 
     }
+
+    @Test
+    public void deletarTest() {
+        UUID id = UUID.fromString("6492b9aa-0fcb-4b29-8ece-f03256cf7757");
+        livroRepository.deleteById(id);
+    }
 }
