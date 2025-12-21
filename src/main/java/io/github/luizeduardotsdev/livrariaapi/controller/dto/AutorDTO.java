@@ -1,4 +1,4 @@
-package io.github.luizeduardotsdev.livrariaapi.controller;
+package io.github.luizeduardotsdev.livrariaapi.controller.dto;
 
 import io.github.luizeduardotsdev.livrariaapi.model.Autor;
 

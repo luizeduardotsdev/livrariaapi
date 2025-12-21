@@ -1,5 +1,6 @@
 package io.github.luizeduardotsdev.livrariaapi.controller;
 
+import io.github.luizeduardotsdev.livrariaapi.controller.dto.AutorDTO;
 import io.github.luizeduardotsdev.livrariaapi.model.Autor;
 import io.github.luizeduardotsdev.livrariaapi.service.AutorService;
 import org.springframework.http.ResponseEntity;
