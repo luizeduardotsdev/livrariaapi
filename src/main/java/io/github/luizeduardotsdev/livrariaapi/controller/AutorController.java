@@ -1,11 +1,9 @@
 package io.github.luizeduardotsdev.livrariaapi.controller;
 
 import io.github.luizeduardotsdev.livrariaapi.service.AutorService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
@@ -26,7 +24,7 @@ public class AutorController {
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("{id}")
+                .path("/{id}")
                 .buildAndExpand(autorEntidade.getId())
                 .toUri();
 
