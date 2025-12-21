@@ -21,7 +21,7 @@ public class Autor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @JdbcTypeCode(Types.VARCHAR) // Adicione esta linha!
+    @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "id", length = 36, nullable = false, updatable = false)
     private UUID id;
 
