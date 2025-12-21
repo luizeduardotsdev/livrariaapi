@@ -2,10 +2,12 @@ package io.github.luizeduardotsdev.livrariaapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,8 +20,9 @@ import java.util.UUID;
 public class Autor {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(Types.VARCHAR) // Adicione esta linha!
+    @Column(name = "id", length = 36, nullable = false, updatable = false)
     private UUID id;
 
     @Column(name = "nome", length = 100, nullable = false)
@@ -42,6 +45,7 @@ public class Autor {
     @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
 
+    @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "id_usuario")
     private UUID idUsuario;
 }
