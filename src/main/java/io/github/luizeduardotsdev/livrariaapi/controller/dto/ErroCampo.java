@@ -1,4 +1,4 @@
 package io.github.luizeduardotsdev.livrariaapi.controller.dto;
 
-public record ErroCampo() {
+public record ErroCampo(String campo, String erro) {
 }
