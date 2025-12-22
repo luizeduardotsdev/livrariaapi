@@ -4,6 +4,7 @@ import io.github.luizeduardotsdev.livrariaapi.model.Autor;
 import io.github.luizeduardotsdev.livrariaapi.repository.AutorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,5 +29,20 @@ public class AutorService {
         autorRepository.delete(autor);
     }
 
+    public List<Autor> pesquisar(String nome, String nacionalidade) {
+        if (nome != null && nacionalidade != null) {
+            return autorRepository.findByNomeAndNacionalidade(nome, nacionalidade);
+        }
 
+        if (nome != null) {
+            return autorRepository.findByNome(nome);
+        }
+
+        if (nacionalidade != null) {
+            return autorRepository.findByNacionalidade(nacionalidade);
+        }
+
+        return autorRepository.findAll();
+
+    }
 }
