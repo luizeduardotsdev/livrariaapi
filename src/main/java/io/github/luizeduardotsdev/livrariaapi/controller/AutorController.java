@@ -1,6 +1,8 @@
 package io.github.luizeduardotsdev.livrariaapi.controller;
 
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.AutorDTO;
+import io.github.luizeduardotsdev.livrariaapi.controller.dto.ErroResposta;
+import io.github.luizeduardotsdev.livrariaapi.exceptions.RegistroDuplicadoException;
 import io.github.luizeduardotsdev.livrariaapi.model.Autor;
 import io.github.luizeduardotsdev.livrariaapi.service.AutorService;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +27,21 @@ public class AutorController {
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody AutorDTO autor) {
-        var autorEntidade = autor.mapearParaAutor();
-        autorService.salvar(autorEntidade);
+        try {
+            var autorEntidade = autor.mapearParaAutor();
+            autorService.salvar(autorEntidade);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(autorEntidade.getId())
-                .toUri();
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(autorEntidade.getId())
+                    .toUri();
 
-
-        return ResponseEntity.created(location).build();
+            return ResponseEntity.created(location).build();
+        } catch (RegistroDuplicadoException e) {
+            var erroDTO = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+        }
     }
 
     @GetMapping("{id}")
