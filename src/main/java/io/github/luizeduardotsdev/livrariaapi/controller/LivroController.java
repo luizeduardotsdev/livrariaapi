@@ -1,5 +1,6 @@
 package io.github.luizeduardotsdev.livrariaapi.controller;
 
+import io.github.luizeduardotsdev.livrariaapi.UriController;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.CadastroLivroDTO;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.ErroResposta;
 import io.github.luizeduardotsdev.livrariaapi.controller.mapper.LivroMapper;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/livros")
-public class LivroController {
+public class LivroController implements UriController {
 
     private final LivroService livroService;
     private final LivroMapper livroMapper;
@@ -31,7 +32,9 @@ public class LivroController {
             Livro livro = livroMapper.toEntity(dto);
             livroService.salvar(livro);
 
-            return ResponseEntity.ok(livro);
+            var url = gerarHeaderLocation(livro.getId());
+
+            return ResponseEntity.created(url).build();
         }catch (RegistroDuplicadoException e) {
             var erroDTO = ErroResposta.conflito(e.getMessage());
             return ResponseEntity.status(erroDTO.status()).body(erroDTO);

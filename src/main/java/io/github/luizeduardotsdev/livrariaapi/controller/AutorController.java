@@ -1,5 +1,6 @@
 package io.github.luizeduardotsdev.livrariaapi.controller;
 
+import io.github.luizeduardotsdev.livrariaapi.UriController;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.AutorDTO;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.ErroResposta;
 import io.github.luizeduardotsdev.livrariaapi.controller.mapper.AutorMapper;
@@ -10,7 +11,6 @@ import io.github.luizeduardotsdev.livrariaapi.service.AutorService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/autores")
-public class AutorController {
+public class AutorController implements UriController {
 
     private final AutorService autorService;
     private final AutorMapper autorMapper;
@@ -36,11 +36,7 @@ public class AutorController {
             var autor = autorMapper.toEntity(autorDTO);
             autorService.salvar(autor);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(autor.getId())
-                    .toUri();
+            URI location = gerarHeaderLocation(autor.getId());
 
             return ResponseEntity.created(location).build();
         } catch (RegistroDuplicadoException e) {
