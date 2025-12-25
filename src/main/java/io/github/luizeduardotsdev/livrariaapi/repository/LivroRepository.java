@@ -1,5 +1,6 @@
 package io.github.luizeduardotsdev.livrariaapi.repository;
 
+import io.github.luizeduardotsdev.livrariaapi.model.Autor;
 import io.github.luizeduardotsdev.livrariaapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,6 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
 
     // select * from livro where data_publicacao between ? and ?
     List<Livro> findByDataPublicacaoBetween(LocalDate inicio, LocalDate fim);
+
+    boolean existsByAutor(Autor autor);
 }
