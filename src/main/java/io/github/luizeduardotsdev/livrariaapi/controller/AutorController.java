@@ -2,6 +2,7 @@ package io.github.luizeduardotsdev.livrariaapi.controller;
 
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.AutorDTO;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.ErroResposta;
+import io.github.luizeduardotsdev.livrariaapi.controller.mapper.AutorMapper;
 import io.github.luizeduardotsdev.livrariaapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.luizeduardotsdev.livrariaapi.exceptions.RegistroDuplicadoException;
 import io.github.luizeduardotsdev.livrariaapi.model.Autor;
@@ -21,10 +22,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/autores")
 public class AutorController {
 
-    private AutorService autorService;
+    private final AutorService autorService;
+    private final AutorMapper autorMapper;
 
-    public AutorController(AutorService autorService) {
+    public AutorController(AutorService autorService, AutorMapper autorMapper) {
         this.autorService = autorService;
+        this.autorMapper = autorMapper;
     }
 
     @PostMapping
