@@ -6,6 +6,7 @@ import io.github.luizeduardotsdev.livrariaapi.exceptions.OperacaoNaoPermitidaExc
 import io.github.luizeduardotsdev.livrariaapi.exceptions.RegistroDuplicadoException;
 import io.github.luizeduardotsdev.livrariaapi.model.Autor;
 import io.github.luizeduardotsdev.livrariaapi.service.AutorService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,7 +28,7 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody AutorDTO autor) {
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autor) {
         try {
             var autorEntidade = autor.mapearParaAutor();
             autorService.salvar(autorEntidade);
@@ -94,7 +95,7 @@ public class AutorController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> atualizar(@PathVariable("id") String id,@RequestBody AutorDTO dto) {
+    public ResponseEntity<Object> atualizar(@PathVariable("id") @Valid String id, @RequestBody AutorDTO dto) {
         try {
             var idAutor = UUID.fromString(id);
             Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
