@@ -29,8 +29,9 @@ public class LivroController {
     public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDTO dto) {
         try {
             Livro livro = livroMapper.toEntity(dto);
+            livroService.salvar(livro);
 
-            return null;
+            return ResponseEntity.ok(livro);
         }catch (RegistroDuplicadoException e) {
             var erroDTO = ErroResposta.conflito(e.getMessage());
             return ResponseEntity.status(erroDTO.status()).body(erroDTO);
