@@ -21,6 +21,7 @@ public class AutorService {
     }
 
     public Autor salvar(Autor autor) {
+        autorValidator.validar(autor);
         return autorRepository.save(autor);
     }
 
@@ -28,6 +29,7 @@ public class AutorService {
         if (autor.getId() == null ){
             throw new IllegalArgumentException("Para atualziar é neccesario que o autor exista");
         }
+        autorValidator.validar(autor);
         autorRepository.save(autor);
     }
 
