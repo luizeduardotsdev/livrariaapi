@@ -31,15 +31,15 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autor) {
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autorDTO) {
         try {
-            var autorEntidade = autor.mapearParaAutor();
-            autorService.salvar(autorEntidade);
+            var autor = autorMapper.toEntity(autorDTO);
+            autorService.salvar(autor);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/{id}")
-                    .buildAndExpand(autorEntidade.getId())
+                    .buildAndExpand(autor.getId())
                     .toUri();
 
             return ResponseEntity.created(location).build();
