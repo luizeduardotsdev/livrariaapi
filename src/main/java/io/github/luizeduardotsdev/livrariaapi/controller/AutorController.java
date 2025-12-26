@@ -28,7 +28,7 @@ public class AutorController implements UriController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autorDTO) {
+    public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO autorDTO) {
         var autor = autorMapper.toEntity(autorDTO);
         autorService.salvar(autor);
 
@@ -50,7 +50,7 @@ public class AutorController implements UriController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Object> deletar (@PathVariable("id") String id) {
+    public ResponseEntity<Void> deletar (@PathVariable("id") String id) {
         var idAutor = UUID.fromString(id);
         Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
 
@@ -74,7 +74,7 @@ public class AutorController implements UriController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> atualizar(@PathVariable("id") @Valid String id, @RequestBody AutorDTO dto) {
+    public ResponseEntity<Void> atualizar(@PathVariable("id") @Valid String id, @RequestBody AutorDTO dto) {
         var idAutor = UUID.fromString(id);
         Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
 
