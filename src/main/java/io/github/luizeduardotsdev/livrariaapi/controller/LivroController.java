@@ -42,4 +42,12 @@ public class LivroController implements UriController {
             return ResponseEntity.ok(dto);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deletar(@PathVariable("id") String id) {
+        return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
+            livroService.deletar(livro);
+            return ResponseEntity.noContent().build();
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
