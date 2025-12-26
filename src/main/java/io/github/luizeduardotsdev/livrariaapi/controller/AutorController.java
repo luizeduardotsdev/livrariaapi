@@ -1,6 +1,5 @@
 package io.github.luizeduardotsdev.livrariaapi.controller;
 
-import io.github.luizeduardotsdev.livrariaapi.UriController;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.AutorDTO;
 import io.github.luizeduardotsdev.livrariaapi.controller.mapper.AutorMapper;
 import io.github.luizeduardotsdev.livrariaapi.model.Autor;

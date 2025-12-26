@@ -1,4 +1,4 @@
-package io.github.luizeduardotsdev.livrariaapi;
+package io.github.luizeduardotsdev.livrariaapi.controller;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

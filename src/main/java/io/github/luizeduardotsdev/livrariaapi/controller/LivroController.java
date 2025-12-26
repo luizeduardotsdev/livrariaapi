@@ -1,6 +1,5 @@
 package io.github.luizeduardotsdev.livrariaapi.controller;
 
-import io.github.luizeduardotsdev.livrariaapi.UriController;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.CadastroLivroDTO;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.ResultadoPesquisaLivroDTO;
 import io.github.luizeduardotsdev.livrariaapi.controller.mapper.LivroMapper;
