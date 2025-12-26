@@ -35,7 +35,7 @@ public class LivroController implements UriController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ResultadoPesquisaLivroDTO> obterDetalhes(@PathVariable("id") @Valid String id){
+    public ResponseEntity<ResultadoPesquisaLivroDTO> obterDetalhes(@PathVariable("id") String id){
 
         return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
             var dto = livroMapper.toDTO(livro);
