@@ -2,15 +2,15 @@ package io.github.luizeduardotsdev.livrariaapi.controller;
 
 import io.github.luizeduardotsdev.livrariaapi.UriController;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.CadastroLivroDTO;
+import io.github.luizeduardotsdev.livrariaapi.controller.dto.ResultadoPesquisaLivroDTO;
 import io.github.luizeduardotsdev.livrariaapi.controller.mapper.LivroMapper;
 import io.github.luizeduardotsdev.livrariaapi.model.Livro;
 import io.github.luizeduardotsdev.livrariaapi.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/livros")
@@ -32,5 +32,14 @@ public class LivroController implements UriController {
         var url = gerarHeaderLocation(livro.getId());
 
         return ResponseEntity.created(url).build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ResultadoPesquisaLivroDTO> obterDetalhes(@PathVariable("id") @Valid String id){
+
+        return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
+            var dto = livroMapper.toDTO(livro);
+            return ResponseEntity.ok(dto);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
