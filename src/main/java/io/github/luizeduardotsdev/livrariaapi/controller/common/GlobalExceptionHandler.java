@@ -2,7 +2,10 @@ package io.github.luizeduardotsdev.livrariaapi.controller.common;
 
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.ErroCampo;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.ErroResposta;
+import io.github.luizeduardotsdev.livrariaapi.exceptions.OperacaoNaoPermitidaException;
+import io.github.luizeduardotsdev.livrariaapi.exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,5 +28,17 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), "erro de validacao", listaErros);
+    }
+
+    @ExceptionHandler(RegistroDuplicadoException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErroResposta handleRegistroDuplicadoException(RegistroDuplicadoException e){
+        return ErroResposta.conflito(e.getMessage());
+    }
+
+    @ExceptionHandler(OperacaoNaoPermitidaException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErroResposta handleOperacaoNaoPermitidaException(OperacaoNaoPermitidaException e){
+        return ErroResposta.respostaPadrao(e.getMessage());
     }
 }
