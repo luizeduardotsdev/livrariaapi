@@ -78,8 +78,7 @@ public class LivroController implements UriController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> atualizar(@PathVariable("id") String id,
-    @RequestBody @Valid CadastroLivroDTO dto){
+    public ResponseEntity<Object> atualizar(@PathVariable("id") String id, @RequestBody @Valid CadastroLivroDTO dto){
 
         return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
             Livro entidadeAux = livroMapper.toEntity(dto);
@@ -92,7 +91,6 @@ public class LivroController implements UriController {
 
             livroService.atualizar(livro);
             return ResponseEntity.noContent().build();
-
 
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
