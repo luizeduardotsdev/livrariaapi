@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecificationExecutor<Livro> {
@@ -17,6 +18,8 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
 
     // select * from livro where data_publicacao between ? and ?
     List<Livro> findByDataPublicacaoBetween(LocalDate inicio, LocalDate fim);
+
+    Optional<Livro> findByIsbn(String isbn);
 
     boolean existsByAutor(Autor autor);
 }
