@@ -7,10 +7,10 @@ import io.github.luizeduardotsdev.livrariaapi.model.GeneroLivro;
 import io.github.luizeduardotsdev.livrariaapi.model.Livro;
 import io.github.luizeduardotsdev.livrariaapi.service.LivroService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -54,7 +54,7 @@ public class LivroController implements UriController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResultadoPesquisaLivroDTO>> pesquisa(
+    public ResponseEntity<Page<ResultadoPesquisaLivroDTO>> pesquisa(
             @RequestParam(value = "isbn", required = false)
             String isbn,
 
@@ -68,13 +68,19 @@ public class LivroController implements UriController {
             GeneroLivro genero,
 
             @RequestParam(value = "anoPublicacao", required = false)
-            Integer anoPublicacao
+            Integer anoPublicacao,
+
+            @RequestParam(value = "pagina", defaultValue = "0")
+            Integer pagina,
+            @RequestParam(value = "tamanhoPagina", defaultValue = "10")
+            Integer tamanhoPagina
     ) {
-        var resultado = livroService.pesquisa(isbn, titulo, nomeAutor, genero, anoPublicacao);
+        Page<Livro> paginaResultado = livroService.pesquisa(
+                isbn, titulo, nomeAutor, genero, anoPublicacao, pagina, tamanhoPagina);
 
-        var lista = resultado.stream().map(livroMapper::toDTO).collect(Collectors.toList());
+        Page<ResultadoPesquisaLivroDTO> resultado = paginaResultado.map(livroMapper::toDTO);
 
-        return ResponseEntity.ok(lista);
+        return ResponseEntity.ok(resultado);
     }
 
     @PutMapping("{id}")
