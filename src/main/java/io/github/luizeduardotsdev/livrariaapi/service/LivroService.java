@@ -77,7 +77,7 @@ public class LivroService {
     }
 
     public void atualizar(Livro livro) {
-        if (livro.getId() != null) {
+        if (livro.getId() == null) {
             throw new IllegalArgumentException("Para atualziar é neccesario que o livro exista");
         }
 
