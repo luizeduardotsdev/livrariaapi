@@ -58,4 +58,12 @@ public class LivroService {
 
         return livroRepository.findAll(specs);
     }
+
+    public void atualizar(Livro livro) {
+        if (livro.getId() != null) {
+            throw new IllegalArgumentException("Para atualziar é neccesario que o livro exista");
+        }
+
+        livroRepository.save(livro);
+    }
 }
