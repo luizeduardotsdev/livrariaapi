@@ -3,7 +3,7 @@ package io.github.luizeduardotsdev.livrariaapi.service;
 import io.github.luizeduardotsdev.livrariaapi.model.GeneroLivro;
 import io.github.luizeduardotsdev.livrariaapi.model.Livro;
 import io.github.luizeduardotsdev.livrariaapi.repository.LivroRepository;
-import io.github.luizeduardotsdev.livrariaapi.repository.specs.LivroSpecs;
+import io.github.luizeduardotsdev.livrariaapi.validator.LivroValidator;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +15,17 @@ import static io.github.luizeduardotsdev.livrariaapi.repository.specs.LivroSpecs
 
 @Service
 public class LivroService {
-    private final LivroRepository livroRepository;
 
-    public LivroService(LivroRepository livroRepository) {
+    private final LivroRepository livroRepository;
+    private final LivroValidator livroValidator;
+
+    public LivroService(LivroRepository livroRepository, LivroValidator livroValidator) {
         this.livroRepository = livroRepository;
+        this.livroValidator = livroValidator;
     }
 
     public Livro salvar(Livro livro) {
+        livroValidator.validarLivro(livro);
         return livroRepository.save(livro);
     }
 
@@ -64,6 +68,7 @@ public class LivroService {
             throw new IllegalArgumentException("Para atualziar é neccesario que o livro exista");
         }
 
+        livroValidator.validarLivro(livro);
         livroRepository.save(livro);
     }
 }
