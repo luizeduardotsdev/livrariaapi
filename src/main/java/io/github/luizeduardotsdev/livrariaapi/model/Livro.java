@@ -21,6 +21,7 @@ public class Livro {
 
     @Id
     @Column(name = "id")
+    @JdbcTypeCode(Types.VARCHAR)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
