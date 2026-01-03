@@ -24,7 +24,10 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(authorize -> {authorize.anyRequest().authenticated();})
+                .authorizeHttpRequests(authorize -> {
+                    authorize.requestMatchers("/autores/**").hasRole("ADMIN");
+                    authorize.requestMatchers("/livros/**").hasAnyRole("ADMIN", "USER");
+                    authorize.anyRequest().authenticated();})
                 .build();
     }
 
