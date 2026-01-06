@@ -2,7 +2,9 @@ package io.github.luizeduardotsdev.livrariaapi.service;
 
 import io.github.luizeduardotsdev.livrariaapi.model.GeneroLivro;
 import io.github.luizeduardotsdev.livrariaapi.model.Livro;
+import io.github.luizeduardotsdev.livrariaapi.model.Usuario;
 import io.github.luizeduardotsdev.livrariaapi.repository.LivroRepository;
+import io.github.luizeduardotsdev.livrariaapi.security.SecurityService;
 import io.github.luizeduardotsdev.livrariaapi.validator.LivroValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,14 +23,18 @@ public class LivroService {
 
     private final LivroRepository livroRepository;
     private final LivroValidator livroValidator;
+    private final SecurityService securityService;
 
-    public LivroService(LivroRepository livroRepository, LivroValidator livroValidator) {
+    public LivroService(LivroRepository livroRepository, LivroValidator livroValidator, SecurityService securityService) {
         this.livroRepository = livroRepository;
         this.livroValidator = livroValidator;
+        this.securityService = securityService;
     }
 
     public Livro salvar(Livro livro) {
         livroValidator.validarLivro(livro);
+        Usuario usuario = securityService.obterUsuarioLogado();
+        livro.setUsuario(usuario);
         return livroRepository.save(livro);
     }
 
