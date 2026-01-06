@@ -46,6 +46,7 @@ public class Autor {
     private LocalDateTime dataAtualizacao;
 
     @JdbcTypeCode(Types.VARCHAR)
-    @Column(name = "id_usuario")
-    private UUID idUsuario;
+    @JoinColumn(name = "id_usuario")
+    @ManyToOne
+    private Usuario usuario;
 }
