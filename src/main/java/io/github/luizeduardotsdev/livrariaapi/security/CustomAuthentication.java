@@ -11,11 +11,11 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Data
-public class CustomAuthetication implements Authentication {
+public class CustomAuthentication implements Authentication {
 
     private final Usuario usuario;
 
-    public CustomAuthetication(Usuario usuario) {
+    public CustomAuthentication(Usuario usuario) {
         this.usuario = usuario;
     }
 
