@@ -9,6 +9,7 @@ import io.github.luizeduardotsdev.livrariaapi.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -27,6 +28,7 @@ public class LivroController implements UriController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDTO dto) {
         Livro livro = livroMapper.toEntity(dto);
         livroService.salvar(livro);
@@ -37,6 +39,7 @@ public class LivroController implements UriController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<ResultadoPesquisaLivroDTO> obterDetalhes(@PathVariable("id") String id){
 
         return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
@@ -46,6 +49,7 @@ public class LivroController implements UriController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<Object> deletar(@PathVariable("id") String id) {
         return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
             livroService.deletar(livro);
@@ -54,6 +58,7 @@ public class LivroController implements UriController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<Page<ResultadoPesquisaLivroDTO>> pesquisa(
             @RequestParam(value = "isbn", required = false)
             String isbn,
@@ -84,6 +89,7 @@ public class LivroController implements UriController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<Object> atualizar(@PathVariable("id") String id, @RequestBody @Valid CadastroLivroDTO dto){
 
         return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
