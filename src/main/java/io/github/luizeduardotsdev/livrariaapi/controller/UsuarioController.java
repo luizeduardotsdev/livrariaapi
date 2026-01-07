@@ -3,6 +3,7 @@ package io.github.luizeduardotsdev.livrariaapi.controller;
 import io.github.luizeduardotsdev.livrariaapi.controller.dto.UsuarioDTO;
 import io.github.luizeduardotsdev.livrariaapi.controller.mapper.UsuarioMapper;
 import io.github.luizeduardotsdev.livrariaapi.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void salvar(@RequestBody UsuarioDTO usuarioDTO) {
+    public void salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
         var usuario = usuarioMapper.toEntity(usuarioDTO);
         usuarioService.salvar(usuario);
     }
