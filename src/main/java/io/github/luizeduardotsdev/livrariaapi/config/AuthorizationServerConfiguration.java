@@ -1,16 +1,37 @@
 package io.github.luizeduardotsdev.livrariaapi.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.security.web.SecurityFilterChain;
 
 import java.time.Duration;
 
 @Configuration
 @EnableWebSecurity
 public class AuthorizationServerConfiguration {
+
+    @Bean
+    @Order(1)
+    public SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception{
+
+        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+                .oidc(Customizer.withDefaults());
+
+        http.oauth2ResourceServer(oauth2Rs -> oauth2Rs.jwt(Customizer.withDefaults()));
+
+        http.formLogin(Customizer.withDefaults());
+
+        return http.build();
+    }
+
 
     public TokenSettings tokenSettings(){
         return TokenSettings.builder()
