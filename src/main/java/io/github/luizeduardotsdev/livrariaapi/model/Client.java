@@ -27,7 +27,7 @@ public class Client {
     @Column(name = "redirect_uri", nullable = false)
     private String redirectUri;
 
-    @Column(name = "redirect_uri", nullable = false)
+    @Column(name = "scope", nullable = false)
     private String scope;
 
 }
