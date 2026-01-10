@@ -5,13 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 public record ClientDTO(
 
         @NotBlank(message = "campo obrigatorio")
-        String clientID,
+        String clientId,
 
         @NotBlank(message = "campo obrigatorio")
         String clientSecret,
 
         @NotBlank(message = "campo obrigatorio")
-        String redirectURI,
+        String redirectUri,
 
         String scope
 
