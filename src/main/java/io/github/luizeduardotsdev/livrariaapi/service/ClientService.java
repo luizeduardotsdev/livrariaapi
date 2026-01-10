@@ -20,6 +20,6 @@ public class ClientService {
     }
 
     public Client obterPorClientId(String id){
-        return clientRespository.findByClientID(id);
+        return clientRespository.findByClientId(id);
     }
 }

@@ -14,11 +14,11 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String clientID;
+    private String clientId;
 
     private String clientSecret;
 
-    private String redirectURI;
+    private String redirectUri;
 
     private String scope;
 
