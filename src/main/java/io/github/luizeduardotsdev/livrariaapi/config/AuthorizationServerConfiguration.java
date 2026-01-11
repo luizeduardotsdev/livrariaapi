@@ -60,7 +60,10 @@ public class AuthorizationServerConfiguration {
     public TokenSettings tokenSettings(){
         return TokenSettings.builder()
                 .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
+                // ACEES TOKEN
                 .accessTokenTimeToLive(Duration.ofMinutes(60))
+                // TOKEN QUE RENOVA O ACESS TOKEN
+                .refreshTokenTimeToLive(Duration.ofMinutes(90))
                 .build();
     }
 
