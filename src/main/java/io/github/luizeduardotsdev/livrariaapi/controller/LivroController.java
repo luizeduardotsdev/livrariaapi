@@ -6,6 +6,10 @@ import io.github.luizeduardotsdev.livrariaapi.controller.mapper.LivroMapper;
 import io.github.luizeduardotsdev.livrariaapi.model.GeneroLivro;
 import io.github.luizeduardotsdev.livrariaapi.model.Livro;
 import io.github.luizeduardotsdev.livrariaapi.service.LivroService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +17,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/livros")
+@Tag(name = "Livros")
 public class LivroController implements UriController {
 
     private final LivroService livroService;
@@ -29,6 +33,12 @@ public class LivroController implements UriController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
+    @Operation(summary = "Salvar", description = "Cadastra um novo livro.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Livro cadastrado."),
+            @ApiResponse(responseCode = "422", description = "Erro de validação."),
+            @ApiResponse(responseCode = "409", description = "Livro ja cadastro.")
+    })
     public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDTO dto) {
         Livro livro = livroMapper.toEntity(dto);
         livroService.salvar(livro);
@@ -40,6 +50,11 @@ public class LivroController implements UriController {
 
     @GetMapping("{id}")
     @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
+    @Operation(summary = "Obter detalhe", description = "Retorna detalhes do livro pelo ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Livro encontrado."),
+            @ApiResponse(responseCode = "404", description = "Livro não encontrado.")
+    })
     public ResponseEntity<ResultadoPesquisaLivroDTO> obterDetalhes(@PathVariable("id") String id){
 
         return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
@@ -50,6 +65,11 @@ public class LivroController implements UriController {
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
+    @Operation(summary = "Deletar", description = "Deleta livro pelo ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Livro nao encontrado.")
+    })
     public ResponseEntity<Object> deletar(@PathVariable("id") String id) {
         return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
             livroService.deletar(livro);
@@ -59,6 +79,10 @@ public class LivroController implements UriController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
+    @Operation(summary = "Pesquisa", description = "Pesquisa paginada por parametros.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Sucesso.")
+    })
     public ResponseEntity<Page<ResultadoPesquisaLivroDTO>> pesquisa(
             @RequestParam(value = "isbn", required = false)
             String isbn,
@@ -90,6 +114,12 @@ public class LivroController implements UriController {
 
     @PutMapping("{id}")
     @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
+    @Operation(summary = "Atualizar", description = "Atualiza os dados de um livro.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Atualizado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Livro não encontrado."),
+            @ApiResponse(responseCode = "409", description = "Livro ja cadastrado.")
+    })
     public ResponseEntity<Object> atualizar(@PathVariable("id") String id, @RequestBody @Valid CadastroLivroDTO dto){
 
         return livroService.obterPorID(UUID.fromString(id)).map(livro -> {
