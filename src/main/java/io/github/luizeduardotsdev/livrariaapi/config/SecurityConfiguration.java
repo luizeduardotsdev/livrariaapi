@@ -30,7 +30,6 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(HttpMethod.POST, "/usuarios/**").permitAll();
                     authorize.anyRequest().authenticated();})
@@ -47,7 +46,7 @@ public class SecurityConfiguration {
         return web -> web.ignoring().requestMatchers(
                 "/v2/api-docs/**",
                 "/v3/api-docs/**",
-                "/swagger/resources/**",
+                "/swagger-resources/**",
                 "/swagger-ui.html",
                 "/swagger-ui/**",
                 "/webjars/**"
