@@ -1,6 +1,9 @@
 spring:
   application:
     name: livrariaapi
+  output:
+    ansi:
+      enabled: always
   datasource:
     url: ${DATABASE_URL}
     username: ${USERNAME}
@@ -26,3 +29,5 @@ springdoc:
 logging:
   file:
     name: app.log
+  level:
+    root: warn
