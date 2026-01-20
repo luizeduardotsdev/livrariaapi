@@ -26,8 +26,8 @@ spring:
 springdoc:
   override-with-generic-response: false
 
-logging:
-  file:
-    name: app.log
-  level:
-    root: warn
+#logging:
+#  file:
+#    name: app.log
+#  level:
+#    root: warn
