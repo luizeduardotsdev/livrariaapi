@@ -5,9 +5,9 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: ${DATABASE_URL}
-    username: ${USERNAME}
-    password: ${PASSWORD}
+    url: ${DB_DATABASE_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
