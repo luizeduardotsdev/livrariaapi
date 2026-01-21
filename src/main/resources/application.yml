@@ -1,4 +1,7 @@
 spring:
+  flyway:
+    locations: classpath:db/migrations
+
   application:
     name: livrariaapi
   output:
